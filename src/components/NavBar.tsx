@@ -39,7 +39,7 @@ const NavBar = () => {
   //     }
   //   })
   // }
-  //}
+  // }
 
   return (
 
@@ -49,11 +49,11 @@ const NavBar = () => {
             <form action="#">
                 <div className="form-input">
                     <input type="search" placeholder="Search..."/>
-                    <button type="submit" className="search-btn"><i className='bx bx-search'></i></button>
+                    <button type="submit" className="search-btn"><i className='bx bx-search '></i></button>
                 </div>
             </form>
             <a href="#" className="notification">
-                <i className="bx bxs-bell"></i>
+                <i className="bx bxs-bell bx-tada bx-flip-horizontal"></i>
                 <span className="num">8</span>
             </a>
             <Stack direction="row" spacing={2}>

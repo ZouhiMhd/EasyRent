@@ -161,7 +161,7 @@ body {
     display: none;
 }
 #sidebar.hide {
-    width: 60px;
+    width: 82px;
 }
 #sidebar .brand{
     font-size: 24px;
@@ -172,7 +172,7 @@ body {
     color: var(--blue);
     position: sticky;
     top: 0;
-    left: 0;
+    left: 25px;
     background: var(--light);
     z-index: 500;
     padding-bottom: 20px;
@@ -628,4 +628,21 @@ body {
     #content main .table-data .todo .todo-list{
         min-width: 420px;
     }
+}
+
+
+.deconnect{
+    width:50%;
+    height:50px;
+    border-radius:10px;
+    color:white;
+    font-size:20px;
+    border:none;
+    cursor:pointer;
+    background-color:var(--red);
+    transition : all 0.2s ease-in-out;
+}
+
+.deconnect:hover {
+    background-color: red;
 }

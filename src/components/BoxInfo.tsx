@@ -47,23 +47,26 @@ export const BoxInfoVisit = ({children}) => {
 
 export const BoxInfoTotal = ({children}) => {
     return (
-      <li><div style={{
-        width: '80px',
-        height: '80px',
-        borderRadius: '10px',
-        background: '#ffe0d3',
-        fontSize: '36px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-      <FaDollarSign color="#fd7238"/>
+      <li>
+      <div
+        style={{
+          width: '80px',
+          height: '80px',
+          borderRadius: '10px',
+          background: '#ffe0d3',
+          fontSize: '36px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <span style={{ color: '#fd7238', fontSize:'13px' }}>Francs CFA</span>
       </div>
-          <span className="text">
-              <h3>{children}</h3>
-              <p>Total de location</p>
-          </span>
-      </li>
+      <span className="text">
+        <h3>{children}</h3>
+        <p>Total de location</p>
+      </span>
+    </li>
       )
   }
 

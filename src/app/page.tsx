@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'boxicons/css/boxicons.css'
 import Image from "next/image";
 import styles from "./page.module.css";
+import  "./globals.css";
 import {SideBar,TableVehicle,Info, HeadDash, RencentOrder, VehicleState} from "@/components";
 
 export default function Home() {
@@ -17,7 +18,7 @@ export default function Home() {
           <TableVehicle/>
           
         
-         <VehicleState completed="10px" nocompleted="300px"/>    
+         <VehicleState completed="10%" nocompleted="300px"/>    
      </div>
  </main></>
  

@@ -3,9 +3,13 @@
 import React from 'react'
 import {GeneralStat, CarRates} from "./components"
 import {HeadDash} from "@/components"
+import '../globals.css'
+import 'boxicons/css/boxicons.css'
+import styles from "../page.module.css";
 
 const page = () => {
   return (<main>
+    <HeadDash title="Analytics"/>
     <div style={{
         width: '90%',
         height: '500px',

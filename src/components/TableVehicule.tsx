@@ -17,14 +17,14 @@ import Stack from '@mui/material/Stack';
 
 function createData(
   name: string,
-  status: string,
+  status: boolean,
   nbcars: number,
   date : string,
   img : string,
 ) {
   return {
     name,
-    status,
+    // status,
     nbcars,
     date,
     img,
@@ -32,11 +32,13 @@ function createData(
       {
         date: '2020-01-05',
         customerId: '11091700',
+        status: true,
         amount: 3,
       },
       {
         date: '2020-01-02',
         customerId: 'Anonymous',
+        status : false,
         amount: 1,
       },
     ],
@@ -67,7 +69,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           {row.name}
         </TableCell>
         <TableCell align="right">{row.nbcars}</TableCell>
-        <TableCell align="right"><span className={row.status}>{row.status}</span></TableCell>
+        {/* <TableCell align="right"><span className={row.status}>{row.status}</span></TableCell> */}
        <TableCell align="right">{row.date}</TableCell>
       </TableRow>
       <TableRow>
@@ -82,6 +84,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                   <TableRow>
                     <TableCell>Date</TableCell>
                     <TableCell>Car Rented</TableCell>
+                    <TableCell>Status</TableCell>
                     <TableCell align="right">Time (days)</TableCell>
                     <TableCell align="right">Total price ($)</TableCell>
                   </TableRow>
@@ -93,6 +96,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                         {historyRow.date}
                       </TableCell>
                       <TableCell>{historyRow.customerId}</TableCell>
+                      <TableCell align="right"><span className={historyRow.status === true? 'completed': 'process'}>{historyRow.status === true? 'available': 'unavailable'}</span></TableCell>
                       <TableCell align="right">{historyRow.amount}</TableCell>
                       <TableCell align="right">
                         {Math.round(historyRow.amount * row.price * 100) / 100}
@@ -110,11 +114,11 @@ function Row(props: { row: ReturnType<typeof createData> }) {
 }
 
 const rows = [
-  createData('John Doe', 'completed', 4.0, "18-08-2024", "/images/photo1.jpg"),
-  createData('John Doe', 'process', 4.0, "18-08-2024", "/images/photo2.jpg"),
-  createData('John Doe', 'completed', 4.0, "18-08-2024", "/images/photo3.jpg"),
-  createData('John Doe', 'pending', 4.0, "18-08-2024", "/images/photo4.jpg"),
-  createData('John Doe', 'completed', 4.0, "18-08-2024", "/images/photo5.jpg"),
+  createData('John Doe', true, 4.0, "18-08-2024", "/images/photo1.jpg"),
+  createData('John Doe',true, 4.0, "18-08-2024", "/images/photo2.jpg"),
+  createData('John Doe',true, 4.0, "18-08-2024", "/images/photo3.jpg"),
+  createData('John Doe', false, 4.0, "18-08-2024", "/images/photo4.jpg"),
+  createData('John Doe', false, 4.0, "18-08-2024", "/images/photo5.jpg"),
   
 ];
 
@@ -130,7 +134,7 @@ const TableVehicle = () => {
             <TableCell />
             <TableCell>Custumers</TableCell>
             <TableCell align="right">Cars Rented</TableCell>
-            <TableCell align="right">Status</TableCell>
+            {/* <TableCell align="right">Status</TableCell> */}
             <TableCell align="right">Date Order</TableCell>
           </TableRow>
         </TableHead>

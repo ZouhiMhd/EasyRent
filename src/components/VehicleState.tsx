@@ -1,9 +1,10 @@
 import React from 'react'
+import LinearProgress from '@mui/material/LinearProgress';
 
 const VehicleState = ({completed, nocompleted}) => {
     return (
       <div className="todo">
-        <div className="head">
+        {/* <div className="head">
           <h3>Vehicles General States</h3>
         </div>
         <ul className="todo-list">
@@ -17,7 +18,28 @@ const VehicleState = ({completed, nocompleted}) => {
             <p>.</p>
             <i className="bx bx-dots-vertical-rounded"></i>
           </li>
-        </ul>
+        </ul> */}
+        <ul className="todo-list">
+          <li>
+            <div style={{ width: '100%' }}>
+              <p>Available</p>
+              <LinearProgress variant="determinate" value={50} />
+            </div>
+          </li>
+          <li>
+            <div style={{ width: '100%' }}>
+              <p>Unavailable</p>
+              <LinearProgress variant="determinate" value={50} color="inherit" />
+            </div>
+          </li>
+          {/* <li>
+            <div style={{ width: '100%' }}>
+              <p>Pending</p>
+              <LinearProgress variant="determinate" value={50}  color="success"/>
+            </div>
+          </li>*/}
+        </ul> 
+        
       </div>
     );
   };

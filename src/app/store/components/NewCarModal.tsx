@@ -8,6 +8,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { Card as MCard} from "@mui/material";
 import { Card, Form, Row, Col } from "react-bootstrap";
 import {NewCarForm} from "./NewCarForm"
+import '../../globals.css'
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -44,6 +45,12 @@ export default function NewCarModal() {
             
           <div className="head" style={{display:'flex', justifyContent:'center', width:'100%', height:'70px', alignItems:'center', color : 'var(--blue)'}}>
           <h3 >Your New Car to Rent</h3>
+          <Button style={{
+            color:'white',
+            backgroundColor:'red',
+            position:'absolute',
+            right:'10px',
+          }} type="reset" onClick={() => handleClose()}>Fermer</Button>
           </div>
 						<NewCarForm/>
 					</Card.Body>

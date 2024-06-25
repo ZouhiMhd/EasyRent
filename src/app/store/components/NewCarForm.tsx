@@ -43,12 +43,14 @@ export const NewCarForm = () => {
     // Logique pour soumettre les données du formulaire
     console.log(formData);
   };
+  
 
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', height: '100%' }}>
       <div style={{ flex: '1', padding: '20px',  maxHeight: '70vh', overflowY: 'auto'}}>
         <Form onSubmit={handleSubmit}>
           {/* Autres champs de formulaire */}
+          <h3 style={{padding : "5px"}}>Informations</h3>
           <Form.Group controlId="category" style={{padding : "10px"}}>
             <Form.Label>Category</Form.Label>
             <Form.Control as="select" name="category" onChange={handleChange}>
@@ -81,17 +83,33 @@ export const NewCarForm = () => {
           </Form.Group>
           <Form.Group controlId="seats" style={{padding : "10px"}}>
             <Form.Label>Seats</Form.Label>
-            <Form.Control type="text" name="seats" value={formData.seats} onChange={handleChange} />
+            <Form.Control type="number" name="seats" value={formData.seats} onChange={handleChange} />
           </Form.Group>
           <Form.Group controlId="luggageCapacity" style={{padding : "10px"}}>
             <Form.Label>Luggage Capacity</Form.Label>
             <Form.Control type="text" name="luggageCapacity" value={formData.luggageCapacity} onChange={handleChange} />
           </Form.Group>
+          <Form.Group controlId="capacity" style={{padding : "10px"}}>
+            <Form.Label>Capacity</Form.Label>
+            <Form.Control type="number" name="capacity" value={formData.capacity} onChange={handleChange} />
+          </Form.Group>
           <Form.Group controlId="fuel" style={{padding : "10px"}}>
             <Form.Label>Fuel</Form.Label>
-            <Form.Control type="text" name="fuel" value={formData.fuel} onChange={handleChange} />
+            <Form.Control as="select" name="fuel" onChange={handleChange}>
+                <option value="">Select fuel</option>
+                <option value="A">Super</option>
+                <option value="B">Gazoil</option>
+                <option value="C">Petrol</option>
+                <option value="D">Electric</option>
+            </Form.Control>  
           </Form.Group>
-          <h3 style={{padding : "10px"}}>More Details</h3>
+          
+          {/* Ajoutez d'autres champs de formulaire ici */}
+         
+        </Form>
+      </div>
+      <div style={{ flex: '1', padding: '5px',  maxHeight: '80vh', overflowY: 'auto' }}>
+      <h3 style={{padding : "5px"}}>More Details</h3>
           <Form.Group controlId="hasAC" style={{padding : "10px"}}>
             <Form.Check type="checkbox" label="Air Conditioner" name="hasAC" onChange={handleChange} />
           </Form.Group>
@@ -140,16 +158,10 @@ export const NewCarForm = () => {
           <Form.Group controlId="description" style={{padding : "10px"}}>
             <Form.Label>Description</Form.Label>
             <Form.Control as="textarea" rows={3} name="description" value={formData.description} onChange={handleChange} />
-          </Form.Group>
-          {/* Ajoutez d'autres champs de formulaire ici */}
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
-        </Form>
-      </div>
+          </Form.Group>     </div>
       <div style={{ flex: '1', padding: '20px',  maxHeight: '80vh', overflowY: 'auto' }}>
         {/* Section pour afficher les photos sélectionnées */}
-        <h4 style={{ marginBottom: '10px' }}>Selected Photos</h4>
+        <h3 style={{ marginBottom: '10px' }}>Selected Photos</h3>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           {formData.photos.length > 0 ? (
             formData.photos.map((photo, index) => (
@@ -162,8 +174,13 @@ export const NewCarForm = () => {
             <Form.Label>Add Photos</Form.Label>
             <Form.Control type="file" name="photos" onChange={handleChange} multiple />
           </Form.Group>
+          <Button variant="primary" type="submit" style={{bottom:'5px', position:'absolute', width:'30%', display:'flex', justifyContent:'center'}}>
+            Submit
+          </Button>
         </div>
+        
       </div>
+
     </div>
   );
 };

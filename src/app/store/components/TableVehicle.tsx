@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useState} from 'react';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -10,6 +11,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
+import { AppBar, Toolbar , Container, Grid, Button, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Avatar from '@mui/material/Avatar';
@@ -17,8 +19,9 @@ import Stack from '@mui/material/Stack';
 import Image from "next/image.d.ts";
 import { FaStar } from 'react-icons/fa';
 import Rating from '@mui/material/Rating';
+import Visibility from '@mui/icons-material/Visibility';
 import {CarDescriptionModal} from './CarDescriptionModal'
-
+import Link from "next/link"
 
 const Likes = ({n}) => {
   const [value, setValue] = React.useState<number | null>(n);
@@ -32,7 +35,7 @@ const Likes = ({n}) => {
 
 function createData(
   name: string,
-  status: string,
+  status: boolean,
   matricule: number,
   img : string,
 ) {
@@ -84,8 +87,8 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           {row.name}
         </TableCell>
         <TableCell align="right">{row.matricule}</TableCell>
-        <TableCell align="right"><span className={row.status}>{row.status}</span></TableCell>
-       <TableCell align="right"><CarDescriptionModal/></TableCell>
+        <TableCell align="right"><span className={row.status === true? 'completed': 'process'}>{row.status === true? 'available': 'unavailable'}</span></TableCell>
+       <TableCell align="right"><Link href='/store/singlecar' style={{color:"black",}}><Visibility/></Link></TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -131,22 +134,54 @@ function Row(props: { row: ReturnType<typeof createData> }) {
 }
 
 const rows = [
-  createData('Mercedes', 'completed', 455322, "/images/v1.png"),
-  createData('Rav4', 'process', 43442, "/images/v2.png"),
-  createData('Prado', 'completed', 44533, "/images/v3.png"),
-  createData('Toyota', 'pending', 44242, "/images/v4.png"),
-  createData('Ferrari', 'completed', 43553, "/images/v5.png"),
+  createData('Mercedes', true, 455322, "/images/v1.png"),
+  createData('Rav4', false, 43442, "/images/v2.png"),
+  createData('Prado', false, 44533, "/images/v3.png"),
+  createData('Toyota', true, 44242, "/images/v4.png"),
+  createData('Ferrari',false, 43553, "/images/v5.png"),
   
 ];
 
 const TableVehicle = () => {
+  
+  const [filter, setFilter] = React.useState('all');
+  const [filteredCars, setFilteredCars] = useState(rows);
+
+  const handleFilterChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    const value = event.target.value as string;
+    setFilter(value);
+    filterCars(value);
+  };
+
+  const filterCars = (criteria: string) => {
+    if (criteria === 'all') {
+      setFilteredCars(rows);
+    } else if (criteria === 'available') {
+      setFilteredCars(rows.filter((car) => car.status === 'available'));
+    } else if (criteria === 'unavailable') {
+      setFilteredCars(rows.filter((car) => car.status === 'unavailable'));
+    } 
+    // else if (criteria === 'pending') {
+    //   setFilteredCars(rows.filter((car) => car.status === 'pending'));
+    // }
+  };
+
   return (
-    <TableContainer component={Paper}>
-      <div className="head">
-          <h3>Your Vehicles</h3>
-          <i className="bx bx-search"></i>
-          <i className="bx bx-filter"></i>
+    <Container>
+      <div
+      style={{display:"flex", justifyContent:"space-between", width:"100%", fontSize:"30px", padding:"10px"}}>
+      <Typography variant="h5">Your Vehicles</Typography>
+        <FormControl variant="outlined" style={{ minWidth: 120 }}>
+          <InputLabel>Filter By</InputLabel>
+          <Select value={filter} onChange={handleFilterChange} label="Filter By">
+            <MenuItem value="all">All</MenuItem>
+            <MenuItem value="available">Available</MenuItem>
+            <MenuItem value="unavailable">Unavailable</MenuItem>
+            {/* <MenuItem value="pending">Pending</MenuItem> */}
+          </Select>
+        </FormControl>
       </div>
+      <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
@@ -164,6 +199,7 @@ const TableVehicle = () => {
         </TableBody>
       </Table>
     </TableContainer>
+    </Container>
   );
 }
 export default TableVehicle
