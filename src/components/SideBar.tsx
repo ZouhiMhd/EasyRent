@@ -15,7 +15,7 @@ const SideBar = () => {
         const handleResize = () => {
             if(window) {
             setWindowWidth(window.innerWidth);
-            console.log("resize")
+            // console.log("resize")
         }
         };
         window.addEventListener("resize", handleResize);
@@ -39,41 +39,41 @@ const SideBar = () => {
         </a> 
         
         <ul className="side-menu top">
-            <li className={pathname === '/' ? 'active' : ''}>       
-                <Link href="/" >
+            <li className={pathname === '/agence' ? 'active' : ''}>       
+                <Link href="/agence" >
                     <i className ='bx bxs-dashboard'></i>
                     {/* {(window.innerWidth < 768 && ( */}
                         <span className="text">Dashboard</span>
                     {/* // ))||(<></>)} */}
                 </Link> 
             </li>
-            <li className={pathname.startsWith('/store') ? 'active' : ''}>
-                <Link href="/store" >
+            <li className={pathname.startsWith('/agence/store') ? 'active' : ''}>
+                <Link href="/agence/store" >
                     <i className ='bx bxs-shopping-bag-alt'></i>
                     <span className="text">My Store</span>
                 </Link>
             </li>
-            <li className={pathname.startsWith('/storDriver') ? 'active' : ''}>
-                <Link href="/storDriver" >
+            <li className={pathname.startsWith('/agence/storDriver') ? 'active' : ''}>
+                <Link href="/agnece/storDriver" >
                     <i className ='bx bxs-group'></i>
                     <span className="text">Drivers</span>
                 </Link>
             </li>
-            <li className={pathname.startsWith('/offices') ? 'active' : ''}>
-                <Link href="/offices" >
+            <li className={pathname.startsWith('/agence/offices') ? 'active' : ''}>
+                <Link href="/agence/offices" >
                 <i className="bx bxs-building"></i>
 
                     <span className="text">Offices</span>
                 </Link>
             </li>
-            <li className={pathname.startsWith('/analytics') ? 'active' : ''}>
-                <Link href="/analytics" >
+            <li className={pathname.startsWith('/agence/analytics') ? 'active' : ''}>
+                <Link href="/agence/analytics" >
                     <i className ='bx bxs-doughnut-chart'></i>
                     <span className="text">Analytics</span>
                 </Link>
             </li>
-            <li className={pathname === '/message' ? 'active' : ''}>
-                <Link href="/message" >
+            <li className={pathname === '/agence/message' ? 'active' : ''}>
+                <Link href="/agence/message" >
                     <i className ='bx bxs-message-dots'></i>
                     <span className="text">Message</span>
                 </Link>
@@ -86,20 +86,20 @@ const SideBar = () => {
             </li> */}
         </ul>
         <ul className="side-menu top">
-            <li  className={pathname === '/login' ? 'active' : ''}>
-                <Link href="/login" >
+            <li  className={pathname === '/agence/settings' ? 'active' : ''}>
+                <Link href="/agence/settings" >
                     <i className ='bx bxs-cog'></i>
                     <span>Settings</span>
                 </Link>
             </li>
-            <li  className={pathname === '/profile' ? 'active' : ''}>
-                <Link href="/profile" >
+            <li  className={pathname === '/agence/profile' ? 'active' : ''}>
+                <Link href="/agence/profile" >
                     <i className ='bx bxs-user-circle '></i>
                     <span>Your Profile</span>
                 </Link>
             </li>
-            <li className={pathname === '/logout' ? 'active' : ''}>
-                <Link href="/logout" >
+            <li className={pathname === '/agence/logout' ? 'active' : ''}>
+                <Link href="/agence/logout" >
                     <i className ='bx bxs-log-out-circle'></i>
                     <span >Logout </span>
                 </Link>

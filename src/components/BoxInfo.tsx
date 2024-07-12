@@ -39,7 +39,7 @@ export const BoxInfoVisit = ({children}) => {
       </div>
           <span className="text">
               <h3>{children}</h3>
-              <p>Visiteurs</p>
+              <p>Chauffeurs</p>
           </span>
       </li>
       )

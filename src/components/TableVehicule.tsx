@@ -1,7 +1,11 @@
+'use client'
+
 import * as React from 'react';
+import {useState, useEffect} from 'react';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
+// import '../../globals.css'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,138 +14,142 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
+import { AppBar, Toolbar , Container, Grid, Button, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
+import {Image} from "@/components";
+import { FaStar } from 'react-icons/fa';
+import Rating from '@mui/material/Rating';
+import Visibility from '@mui/icons-material/Visibility';
+import {CarDescriptionModal} from './CarDescriptionModal'
+import Link from "next/link"
+// import Agence from './components/DescAgence';
+import { API_BASE_URL, AGENCE_ID } from "@/components/config_api.js";
+import axios from 'axios'
 
-function createData(
-  name: string,
-  status: boolean,
-  nbcars: number,
-  date : string,
-  img : string,
-) {
-  return {
-    name,
-    // status,
-    nbcars,
-    date,
-    img,
-    history: [
-      {
-        date: '2020-01-05',
-        customerId: '11091700',
-        status: true,
-        amount: 3,
-      },
-      {
-        date: '2020-01-02',
-        customerId: 'Anonymous',
-        status : false,
-        amount: 1,
-      },
-    ],
-  };
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear().toString();
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+
+  return `${day}-${month}-${year} à ${hours}h${minutes}`;
+};
+
+const Likes = ({n}) => {
+  const [value, setValue] = React.useState<number | null>(n);
+  return (
+    <Box sx={{ '& > legend': { mt: 2 }, }}>
+      <Rating name="read-only" value={value} readOnly />
+    </Box>
+  );
 }
 
 function Row(props: { row: ReturnType<typeof createData> }) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
 
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const endpoint = `chauffeurs/${row.id}/locations`;
+        const res = await axios.get(`${API_BASE_URL}/${endpoint}`);
+        // console.log(res.data);
+        setData(res.data);
+      } catch (error) {
+        console.error('Erreur:', error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
   return (
     <React.Fragment>
       <TableRow sx={{ '& > *': { borderBottom: 'unset', '&:hover': {
         backgroundColor: 'var(--grey)'} } }}>
-        <TableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
+        
         <TableCell component="th" scope="row">
             <Stack direction="row" spacing={2}>
-              <Avatar alt="Remy Sharp" src={row.img} sx={{ width: 50, height: 50 }} />
+              <Image endpoint={`vehicules/${row.vehiculeId}/images`} id={row.id} />
             </Stack>
-          {row.name}
         </TableCell>
-        <TableCell align="right">{row.nbcars}</TableCell>
-        {/* <TableCell align="right"><span className={row.status}>{row.status}</span></TableCell> */}
-       <TableCell align="right">{row.date}</TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                History
-              </Typography>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Car Rented</TableCell>
-                    <TableCell>Status</TableCell>
-                    <TableCell align="right">Time (days)</TableCell>
-                    <TableCell align="right">Total price ($)</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody >
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">
-                        {historyRow.date}
-                      </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align="right"><span className={historyRow.status === true? 'completed': 'process'}>{historyRow.status === true? 'available': 'unavailable'}</span></TableCell>
-                      <TableCell align="right">{historyRow.amount}</TableCell>
-                      <TableCell align="right">
-                        {Math.round(historyRow.amount * row.price * 100) / 100}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Box>
-          </Collapse>
+        
+        <TableCell align="right">{row.clientId}</TableCell>
+        <TableCell align="right">
+          {row.dateDebut && formatDate(row.dateDebut)}
         </TableCell>
-      </TableRow>
+        <TableCell align="right">
+          {row.dateFin && formatDate(row.dateFin)}
+        </TableCell>
+        <TableCell align="right">{row.montant}</TableCell>
+         </TableRow>
+     
     </React.Fragment>
   );
 }
 
-const rows = [
-  createData('John Doe', true, 4.0, "18-08-2024", "/images/photo1.jpg"),
-  createData('John Doe',true, 4.0, "18-08-2024", "/images/photo2.jpg"),
-  createData('John Doe',true, 4.0, "18-08-2024", "/images/photo3.jpg"),
-  createData('John Doe', false, 4.0, "18-08-2024", "/images/photo4.jpg"),
-  createData('John Doe', false, 4.0, "18-08-2024", "/images/photo5.jpg"),
-  
-];
+
 
 const TableVehicle = () => {
+  const [filteredCars, setFilteredCars] = useState([]);
+  const [filter, setFilter] = React.useState('all');
+  const [data, setData] = useState(null);
+  const handleFilterChange = (event) => {
+    const value = event.target.value;
+    setFilter(value);
+    filterCars(value);
+  };
+  const filterCars = (criteria) => {
+    if (criteria === 'all') {
+      setFilteredCars(data);
+    } else if (criteria === 'available') {
+      setFilteredCars(data.filter((car) => car.statut));
+    } else if (criteria === 'unavailable') {
+      setFilteredCars(data.filter((car) => !car.statut));
+    }
+  };
+
+  const fetchVehicles = async () => {
+    try {
+      const endpoint = `agences/1/locations`;
+      const res = await axios.get(`${API_BASE_URL}/${endpoint}`);
+      setData(res.data);
+      setFilteredCars(res.data);
+    } catch (error) {
+      console.error('Erreur:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchVehicles();
+  }, []);
+
   return (
     <TableContainer component={Paper}>
-      <div className="head">
-              <h3>Recent Rents</h3>
-          </div>
+      <div
+      style={{display:"flex", justifyContent:"space-between", width:"100%", fontSize:"30px", padding:"10px"}}>
+      <Typography variant="h5">Your Locations</Typography>
+      </div>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
-            <TableCell />
-            <TableCell>Custumers</TableCell>
-            <TableCell align="right">Cars Rented</TableCell>
-            {/* <TableCell align="right">Status</TableCell> */}
-            <TableCell align="right">Date Order</TableCell>
+            <TableCell  align="center">Véhicule</TableCell>
+            <TableCell align="right">Client</TableCell>
+            <TableCell align="right">Date Début</TableCell>
+            <TableCell align="right">Date Fin</TableCell>
+            <TableCell align="right">Montant</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <Row key={row.name} row={row} />
-          ))}
+        {filteredCars.map((row) => (
+              <Row key={row.id} row={row} />
+            ))}
         </TableBody>
       </Table>
     </TableContainer>

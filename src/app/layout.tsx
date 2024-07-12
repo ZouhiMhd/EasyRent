@@ -3,10 +3,17 @@ import Script from 'next/Script';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Inter } from "next/font/google";
 import "./globals.css";
-
+import { AuthProvider } from '@/contexts/authContext'; 
 import 'boxicons/css/boxicons.css'
 import ImportBsJS from "@/components/ImportBsJS";
 import { SideBar, NavBar} from "@/components";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import 'swiper/css/autoplay';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,14 +30,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <AuthProvider>
     <html lang="en">
       <body className={inter.className}>
-      <SideBar/>
-      <section id="content">
-      <NavBar/>
         {children}
-      </section>
      </body>
     </html>
+    </AuthProvider>
   );
 }
