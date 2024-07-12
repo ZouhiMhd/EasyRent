@@ -1,6 +1,22 @@
 <<<<<<< HEAD
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Description
+
+EasyRent est une application de location de véhicules construite avec NextJS. L'application comprend plusieurs pages permettant aux utilisateurs de louer des véhicules, ainsi qu'une interface dédiée pour les agences de location.
+## Installation
+
+1. **Cloner le dépôt :**
+    ```bash
+    git clone <https://github.com/ZouhiMhd/EasyRent.git>
+    cd <nom-du-répertoire>
+    ```
+
+2. **Installer les dépendances :**
+    ```bash
+    npm install
+    ```
+
 ## Getting Started
 
 First, run the development server:
